@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carnet de séquences — Sciences et technologie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&family=Special+Elite&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1EFDE; --paper-card:#FBFAF2; --ink:#1D2B22; --ink-soft:#48594C;
+    --forest:#2F5233; --forest-dark:#1C3320; --moss:#6B8F71; --ochre:#B8842E; --ochre-soft:#EFDFBB;
+    --sky:#3E6E8E; --sky-soft:#DCE9EE; --line:#D6D0B5; --danger:#A23B2E; --danger-soft:#F3E0DB;
+    --shadow: 0 2px 10px rgba(29,43,34,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.5;}
+  h1,h2,h3,.display{font-family:'Zilla Slab',serif;}
+  .eyebrow{font-family:'Special Elite',monospace;text-transform:uppercase;letter-spacing:1.5px;font-size:12px;color:var(--ochre);}
+  a{color:var(--forest);}
+  button{font-family:'Inter',sans-serif;cursor:pointer;}
+  button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{outline:3px solid var(--sky);outline-offset:2px;}
+  .wrap{width:80%;margin:0 auto;padding:28px 0 80px;}
+  @media(max-width:780px){.wrap{width:94%;}}
+
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--line);}
+  .brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
+  .brand .mark{width:44px;height:44px;border-radius:50%;background:var(--forest);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Zilla Slab',serif;font-weight:700;font-size:18px;flex-shrink:0;}
+  .brand .title{font-family:'Zilla Slab',serif;font-weight:700;font-size:19px;line-height:1.2;}
+  .brand .sub{font-size:12.5px;color:var(--ink-soft);}
+  .import-link{font-size:13px;color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:20px;padding:7px 14px;}
+  .import-link:hover{border-color:var(--forest);color:var(--forest);}
+
+  .tabs{display:flex;gap:6px;margin-bottom:0;}
+  .tab{flex:1;text-align:center;padding:12px 8px;border:2px solid var(--line);border-bottom:none;border-radius:10px 10px 0 0;background:#E7E4D0;color:var(--ink-soft);font-weight:600;font-family:'Zilla Slab',serif;font-size:16px;transition:transform .15s ease;}
+  .tab.active{background:var(--paper-card);color:var(--forest-dark);border-color:var(--forest);transform:translateY(2px);box-shadow:0 -2px 0 var(--forest) inset;}
+  .tab .n{display:block;font-family:'Special Elite',monospace;font-size:11px;color:var(--ochre);letter-spacing:1px;margin-bottom:2px;}
+
+  .panel{background:var(--paper-card);border:2px solid var(--forest);border-top:none;border-radius:0 0 12px 12px;padding:24px;box-shadow:var(--shadow);}
+
+  .theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:680px){.theme-grid{grid-template-columns:1fr;} .tab .label{display:none;}}
+  .theme-card{border:1.5px dashed var(--line);border-radius:10px;padding:16px;background:#fff;display:flex;flex-direction:column;gap:8px;}
+  .theme-card .badge{display:inline-block;font-size:11px;font-family:'Special Elite',monospace;letter-spacing:0.5px;padding:3px 9px;border-radius:20px;background:var(--sky-soft);color:var(--sky);width:fit-content;}
+  .theme-card h3{margin:2px 0 0;font-size:17px;color:var(--forest-dark);}
+  .theme-card p{margin:0;font-size:13px;color:var(--ink-soft);}
+  .theme-card .example{font-size:12.5px;font-style:italic;color:var(--ink-soft);border-left:3px solid var(--ochre-soft);padding-left:10px;margin-top:2px;}
+  .choose-btn{margin-top:auto;align-self:flex-start;background:var(--forest);color:#fff;border:none;padding:8px 16px;border-radius:20px;font-size:13.5px;font-weight:600;}
+  .choose-btn:hover{background:var(--forest-dark);}
+
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-weight:600;font-size:14px;margin-bottom:6px;color:var(--forest-dark);}
+  .field .hint{font-weight:400;font-size:12.5px;color:var(--ink-soft);display:block;margin-top:3px;}
+  input[type=text], input[type=number], textarea, select{
+    width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;background:#fff;font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);
+  }
+  textarea{min-height:150px;resize:vertical;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  @media(max-width:680px){.row2,.row3{grid-template-columns:1fr;}}
+  .checks{display:flex;flex-wrap:wrap;gap:10px;}
+  .check-pill{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:20px;padding:6px 12px;font-size:13px;background:#fff;}
+  .check-pill input{width:auto;}
+
+  .stamp-box{background:var(--ochre-soft);border:1.5px dashed var(--ochre);border-radius:10px;padding:14px 16px;margin-bottom:20px;}
+  .stamp-box .eyebrow{color:var(--ochre);}
+  .stamp-box h3{margin:4px 0 4px;font-size:18px;color:var(--forest-dark);}
+  .stamp-box p{margin:0;font-size:13.5px;color:var(--ink-soft);}
+  .objectif-bar{background:var(--forest);border-radius:10px;padding:14px 18px;margin-bottom:20px;}
+  .objectif-bar label{color:#fff;font-weight:700;font-size:15px;margin-bottom:6px;}
+  .objectif-bar label .hint{color:#CFE3E1;}
+  .objectif-bar input{border:none;font-size:16px;padding:12px 14px;}
+
+  .seance-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+  .dots{display:flex;gap:6px;flex-wrap:wrap;}
+  .dot{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:13px;color:var(--ink-soft);}
+  .dot.active{background:var(--forest);color:#fff;border-color:var(--forest);}
+  .seance-count{font-size:12.5px;color:var(--ink-soft);font-weight:600;}
+
+  .step-row{border-top:1px solid var(--line);padding:16px 0;}
+  .step-row:first-child{border-top:none;padding-top:0;}
+  .step-row-head{font-family:'Zilla Slab',serif;font-weight:700;font-size:17px;color:var(--forest-dark);margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .step-row.muted .step-row-head{color:var(--ink-soft);}
+  .collapse-toggle{background:var(--forest);color:#fff;border:none;width:26px;height:26px;border-radius:6px;font-size:13px;flex-shrink:0;cursor:pointer;}
+  .step-row.muted .collapse-toggle{background:var(--ink-soft);}
+  .modalite-select{margin-left:auto;max-width:170px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;padding:5px 8px;border-radius:16px;border:1.5px solid var(--sky);color:var(--sky);background:var(--sky-soft);}
+  .step-row.muted textarea{background:#F5F4EC;color:var(--ink-soft);}
+  .tag{font-family:'Inter',sans-serif;font-weight:400;font-size:11px;background:var(--sky-soft);color:var(--sky);padding:2px 8px;border-radius:10px;margin-left:8px;}
+  .help-trigger{position:relative;cursor:help;}
+  .help-icon{color:var(--sky);font-size:14px;margin-left:3px;}
+  .help-pop{display:none;position:absolute;top:100%;left:0;z-index:20;background:#fff;border:1.5px solid var(--sky);border-radius:10px;padding:12px 14px;width:320px;max-width:80vw;box-shadow:var(--shadow);margin-top:6px;}
+  .help-pop strong{display:block;color:var(--sky);font-size:12px;font-family:'Inter',sans-serif;margin:8px 0 4px;}
+  .help-pop strong:first-child{margin-top:0;}
+  .help-pop ul{margin:0 0 4px;padding-left:18px;}
+  .help-pop li{margin-bottom:3px;font-size:12.5px;font-weight:400;color:var(--ink);font-family:'Inter',sans-serif;}
+  .help-trigger:hover .help-pop, .help-trigger.show .help-pop{display:block;}
+  .materiel-line{background:#F5F1E4;border-radius:8px;padding:10px 14px;margin-top:6px;}
+  .floating-endsession{background:var(--paper-card);border:1.5px dashed var(--ochre);border-radius:10px;padding:10px 8px;box-shadow:var(--shadow);margin-bottom:16px;}
+  .floating-endsession .fe-icon{width:26px;height:26px;border-radius:50%;background:var(--ochre-soft);color:var(--ochre);display:flex;align-items:center;justify-content:center;font-size:13px;margin:0 auto 5px;}
+  .floating-endsession .fe-eyebrow{display:block;text-align:center;font-family:'Special Elite',monospace;font-size:8.5px;letter-spacing:0.5px;color:var(--ochre);text-transform:uppercase;margin-bottom:6px;}
+  .floating-endsession .fe-check{display:flex;align-items:flex-start;gap:5px;font-family:'Inter',sans-serif;font-size:10.5px;color:var(--ink);line-height:1.25;cursor:pointer;}
+  .floating-endsession .fe-check input{width:auto;margin-top:1px;flex-shrink:0;}
+  .floating-endsession .fe-resume{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);}
+  .floating-endsession .fe-resume label{display:block;font-family:'Zilla Slab',serif;font-weight:700;font-size:10.5px;color:var(--forest-dark);margin-bottom:4px;}
+  .floating-endsession .fe-resume select{width:100%;font-size:10.5px;padding:5px 4px;}
+  .floating-endsession .fe-badge{display:block;width:100%;margin-top:8px;background:var(--sky-soft);color:var(--sky);border:none;border-radius:7px;padding:7px 6px;font-size:10px;font-weight:700;text-align:center;line-height:1.25;cursor:pointer;font-family:'Inter',sans-serif;}
+  .floating-endsession .fe-badge:hover{background:var(--sky);color:#fff;}
+  @media(min-width:900px){
+    .floating-endsession{position:fixed;left:8px;top:50%;transform:translateY(-50%);width:112px;z-index:50;margin-bottom:0;}
+  }
+
+  .btn-row{display:flex;gap:12px;justify-content:space-between;margin-top:24px;flex-wrap:wrap;}
+  .btn{padding:11px 22px;border-radius:24px;border:none;font-weight:600;font-size:14.5px;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--forest);color:#fff;}
+  .btn-primary:hover{background:var(--forest-dark);}
+  .btn-ghost{background:none;border:1.5px solid var(--line);color:var(--ink-soft);}
+  .btn-ghost:hover{border-color:var(--forest);color:var(--forest);}
+  .btn:disabled{opacity:0.5;cursor:not-allowed;}
+
+  .chapeau table{width:100%;border-collapse:collapse;margin-bottom:14px;}
+  .chapeau th, .chapeau td, .seance table th, .seance table td{border:1px solid var(--line);padding:8px 10px;font-size:13.5px;text-align:left;vertical-align:top;}
+  .chapeau th, .seance table th{background:#EFEBD8;font-weight:700;color:var(--forest-dark);width:20%;}
+  .seance{margin-top:22px;padding-top:16px;border-top:2px solid var(--line);}
+  .seance table{width:100%;border-collapse:collapse;}
+  .seance table th{width:auto;}
+
+  .send-steps{counter-reset:step;margin:20px 0;}
+  .send-step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--line);}
+  .send-step:first-child{border-top:none;}
+  .send-step .num{counter-increment:step;flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--forest);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Zilla Slab',serif;}
+  .send-step .num::before{content:counter(step);}
+  .send-step .body{flex:1;}
+  .send-step .body strong{display:block;margin-bottom:4px;color:var(--forest-dark);}
+  .send-step .body p{margin:0;font-size:13px;color:var(--ink-soft);}
+
+  .empty{text-align:center;color:var(--ink-soft);padding:40px 20px;font-style:italic;}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<input type="file" id="import-input" accept="application/json" style="display:none;">
+
+<script>
+/* ============================================================ DONNÉES ============================================================ */
+const THEMES = {
+  C1: [
+    {t:"Le développement animal", cat:"Vivant", obj:"Reconnaître les principales étapes du développement d'un animal.", ex:"Installer et observer un élevage dans la classe ; repérer et dater les naissances."},
+    {t:"Le développement végétal", cat:"Vivant", obj:"Reconnaître les principales étapes du développement d'un végétal, dans une situation d'observation du réel ou sur une image.", ex:"Mettre en place des plantations en classe pour faire le lien entre graine, fleur et fruit."},
+    {t:"Les besoins des animaux", cat:"Vivant", obj:"Connaître les besoins essentiels de quelques animaux.", ex:"Participer à l'entretien quotidien des élevages en fournissant la nourriture adaptée et en assurant le nettoyage."},
+    {t:"Les besoins des végétaux", cat:"Vivant", obj:"Connaître les besoins essentiels de quelques végétaux.", ex:"Arroser et entretenir les plantations pour comprendre l'impact de l'eau et de la lumière sur leur croissance."},
+    {t:"Le corps humain", cat:"Corps & santé", obj:"Situer et nommer les différentes parties du corps humain, sur soi ou sur une représentation.", ex:"Dessiner un être humain complet et articulé ; repérer et nommer ses articulations (coude, genou) lors de jeux ou parcours de motricité."},
+    {t:"L'hygiène et la santé", cat:"Corps & santé", obj:"Connaître et mettre en œuvre quelques règles d'hygiène et de vie saine pour soi, pour les autres et pour l'environnement.", ex:"Pratiquer et analyser le rituel du lavage des mains, du mouchage de nez ou du brossage des dents."},
+    {t:"La protection du vivant", cat:"Vivant", obj:"Commencer à adopter une attitude responsable en matière de respect des lieux et de protection du vivant.", ex:"Sensibiliser au gaspillage, mettre en place le tri et la réduction des déchets ; entretenir les espaces verts de l'école."},
+    {t:"Les matériaux et les outils", cat:"Objets & techniques", obj:"Choisir, utiliser et savoir désigner des outils et des matériaux adaptés à une situation, à des actions techniques spécifiques (plier, couper, coller, assembler, actionner…).", ex:"Réaliser une recette de cuisine (pâte à tarte, compote) ; s'entraîner avec ciseaux, gabarits ou perforatrices."},
+    {t:"Les caractéristiques sensorielles", cat:"Matière", obj:"Distinguer des réalités différentes selon leurs caractéristiques sensorielles.", ex:"Trier et comparer des objets ou des matériaux en utilisant ses 5 sens (goût, odeur, texture)."},
+    {t:"Les constructions et maquettes", cat:"Objets & techniques", obj:"Réaliser des constructions – construire des maquettes simples en fonction de plans ou d'instructions de montage.", ex:"Fabriquer des « objets de l'eau » (bateau, moulin) ; monter un objet en kit à l'aide d'une notice illustrée."},
+    {t:"Les dangers domestiques", cat:"Corps & santé", obj:"Prendre en compte les risques de l'environnement familier proche (objets et comportements dangereux, produits toxiques).", ex:"Identifier, justifier et alerter sur les objets dangereux, les risques de coupures, brûlures ou d'électrocution dans la classe."},
+    {t:"Les outils numériques", cat:"Numérique", obj:"Utiliser des objets numériques : appareil photo, tablette, ordinateur.", ex:"Photographier une sortie scolaire ou les étapes d'une fabrication ; utiliser un clavier pour taper son prénom ou une courte phrase."}
+  ],
+  C2: [
+    {t:"Les caractéristiques du vivant", cat:"Vivant", obj:"Connaître des caractéristiques du monde vivant, ses interactions, sa diversité.", ex:"Créer et observer de petits écosystèmes dans la mare ou le jardin de l'école ; construire le schéma simple d'une chaîne alimentaire locale."},
+    {t:"La santé et le corps humain", cat:"Corps & santé", obj:"Reconnaître des comportements favorables à sa santé.", ex:"Utiliser toise et balance pour créer des graphiques de croissance ; repérer les 4 familles d'aliments ; modéliser la flexion/extension du bras avec des pantins articulés."},
+    {t:"Les états de la matière", cat:"Matière", obj:"Identifier les trois états de la matière et observer des changements d'états.", ex:"Le « défi glaçon » pour observer fusion et solidification ; seringues, pompes à vélo et ballons pour prouver l'existence de l'air."},
+    {t:"L'eau dans la vie quotidienne", cat:"Matière", obj:"Identifier un changement d'état de l'eau dans un phénomène de la vie quotidienne.", ex:"Mettre en lien la météo locale avec les états de l'eau (pluie, nuages, glace)."},
+    {t:"La fonction des objets", cat:"Objets & techniques", obj:"Comprendre la fonction et le fonctionnement d'objets fabriqués.", ex:"Démonter et analyser les composants d'une lampe de poche, ou comparer différents objets servant à presser un citron."},
+    {t:"Les circuits électriques", cat:"Objets & techniques", obj:"Réaliser quelques objets et circuits électriques simples, en respectant des règles élémentaires de sécurité.", ex:"Construire un jeu d'adresse électrique, une maquette de maison éclairée, ou tester la conductivité de matériaux (isolants/conducteurs)."},
+    {t:"L'environnement numérique", cat:"Numérique", obj:"Commencer à s'approprier un environnement numérique.", ex:"Rédiger le compte-rendu ou la une d'un journal scolaire en utilisant un traitement de texte, la mise en page et le correcteur orthographique."}
+  ],
+  C3: [
+    {t:"Classification et évolution", cat:"Vivant", obj:"Classer les organismes, exploiter les liens de parenté pour comprendre et expliquer l'évolution des organismes.", ex:"Réaliser une classification d'animaux en « groupes emboîtés » ; construire un arbre de parenté ; observer des cellules au microscope."},
+    {t:"Alimentation humaine", cat:"Corps & santé", obj:"Expliquer les besoins variables en aliments de l'être humain ; l'origine et les techniques mises en œuvre pour transformer et conserver les aliments.", ex:"Fabriquer du yaourt ou du pain pour observer l'action des micro-organismes ; analyser étiquettes et dates de péremption."},
+    {t:"Prévention et santé", cat:"Corps & santé", obj:"Apprendre à devenir responsable pour sa santé : prévenir les comportements à risques (addictions…).", ex:"Mener des recherches documentaires sur la toxicité du tabac, de l'alcool, du cannabis pour débattre et faire des choix responsables."},
+    {t:"Développement et reproduction", cat:"Vivant", obj:"Décrire comment les êtres vivants se développent et deviennent aptes à se reproduire.", ex:"Suivre le cycle de développement du moustique pour lutter contre la dengue ; nommer et situer les changements liés à la puberté."},
+    {t:"La matière organique", cat:"Matière", obj:"Expliquer l'origine de la matière organique des êtres vivants et son devenir.", ex:"Expériences avec des végétaux plantés avec/sans eau ou avec/sans lumière ; observer le rôle des décomposeurs via le compostage."},
+    {t:"L'évolution des objets", cat:"Objets & techniques", obj:"Identifier les principales évolutions du besoin et des objets.", ex:"Construire une frise chronologique des évolutions techniques et des matériaux d'un objet (vélo, lampe...) au fil du temps."},
+    {t:"Fonctionnement des objets techniques", cat:"Objets & techniques", obj:"Décrire le fonctionnement d'objets techniques, leurs fonctions et leurs constitutions.", ex:"Isoler les pièces d'un mécanisme en fonctionnement pour en faire des schémas d'explication ou des croquis à main levée."},
+    {t:"Les familles de matériaux", cat:"Matière", obj:"Identifier les principales familles de matériaux.", ex:"Justifier le choix d'un matériau pour une maquette selon ses contraintes, son aptitude au recyclage ou son impact environnemental."},
+    {t:"Conception technologique", cat:"Objets & techniques", obj:"Concevoir et produire tout ou partie d'un objet technique en équipe pour traduire une solution technologique répondant à un besoin.", ex:"Créer la maquette réelle ou le prototype virtuel d'un objet en respectant un cahier des charges, un planning et des protocoles d'assemblage."},
+    {t:"Gestion de l'information", cat:"Numérique", obj:"Repérer et comprendre la communication et la gestion de l'information.", ex:"Découvrir l'algorithmique de base avec des logiciels visuels simples ; utiliser un ENT pour stocker et partager des données de groupe."}
+  ]
+};
+const CYCLE_LABEL = {C1:"Cycle 1", C2:"Cycle 2", C3:"Cycle 3"};
+const DOMAINES_SOCLE = [
+  ["D1","Les langages pour penser et communiquer"],
+  ["D2","Les méthodes et outils pour apprendre"],
+  ["D3","La formation de la personne et du citoyen"],
+  ["D4","Les systèmes naturels et les systèmes techniques"],
+  ["D5","Les représentations du monde et l'activité humaine"]
+];
+const STEPS = [
+  ["situation","1. Situation déclenchante"],
+  ["questionnement","2. Questionnement"],
+  ["hypotheses","3. Hypothèses"],
+  ["investigation","4. Investigation"],
+  ["miseEnCommun","5. Mise en commun"],
+  ["structuration","6. Structuration"],
+  ["reinvestissement","7. Réinvestissement"]
+];
+const MODALITES = ["Individuel", "Binôme", "Petit groupe", "Collectif"];
+const DOMAINE_ENSEIGNEMENT_PAR_CYCLE = { C1: "Explorer le monde", C2: "Questionner le monde", C3: "Sciences et technologie" };
+
+/* Repères de progressivité officiels — Sciences et technologie, Nouvelle-Calédonie (C1 à C3) */
+const PROGRAMMES_DATA = {
+  C1: [
+    {
+      nom: "Explorer le monde du vivant, de la matière et des objets",
+      domainesSocle: ["D1","D2","D4"],
+      competences: "Non détaillées séparément dans les repères du cycle 1 (structure propre à la maternelle) — chaque attendu intègre déjà la compétence visée.",
+      attendus: [
+        "Reconnaître les principales étapes du développement d'un animal.",
+        "Reconnaître les principales étapes du développement d'un végétal, dans une situation d'observation du réel ou sur une image.",
+        "Connaître les besoins essentiels de quelques animaux.",
+        "Connaître les besoins essentiels de quelques végétaux.",
+        "Situer et nommer les différentes parties du corps humain, sur soi ou sur une représentation.",
+        "Connaître et mettre en œuvre quelques règles d'hygiène et de vie saine pour soi, pour les autres et pour l'environnement.",
+        "Commencer à adopter une attitude responsable en matière de respect des lieux et de protection du vivant.",
+        "Choisir, utiliser et savoir désigner des outils et des matériaux adaptés à une situation, à des actions techniques spécifiques (plier, couper, coller, assembler, actionner…).",
+        "Distinguer des réalités différentes selon leurs caractéristiques sensorielles.",
+        "Réaliser des constructions – construire des maquettes simples en fonction de plans ou d'instructions de montage.",
+        "Prendre en compte les risques de l'environnement familier proche (objets et comportements dangereux, produits toxiques).",
+        "Utiliser des objets numériques : appareil photo, tablette, ordinateur.",
+      ],
+    },
+  ],
+  C2: [
+    {
+      nom: "Questionner le monde du vivant (Comment reconnaître le monde vivant ?)",
+      domainesSocle: ["D1","D2","D3","D4"],
+      competences: "Pratiquer des démarches scientifiques : pratiquer, avec l'aide des enseignants, quelques moments d'une démarche d'investigation (questionnement, observation, expérience, description, raisonnement, conclusion). S'approprier des outils et des méthodes : choisir ou utiliser le matériel adapté ; manipuler avec soin. Pratiquer des langages : communiquer à l'oral et à l'écrit avec précision ; lire des textes documentaires ; restituer des observations. Adopter un comportement éthique et responsable : développer un comportement responsable vis-à-vis de l'environnement et de la santé ; mettre en pratique des éco-gestes.",
+      attendus: [
+        "Connaître des caractéristiques du monde vivant, ses interactions, sa diversité.",
+        "Reconnaître des comportements favorables à sa santé.",
+      ],
+    },
+    {
+      nom: "Questionner le monde de la matière (Qu'est-ce que la matière ?)",
+      domainesSocle: ["D1","D2","D4","D5"],
+      competences: "Pratiquer des démarches scientifiques : pratiquer, avec l'aide des enseignants, quelques moments d'une démarche d'investigation. S'approprier des outils et des méthodes : choisir ou utiliser le matériel adapté ; manipuler avec soin. Pratiquer des langages : communiquer à l'oral et à l'écrit avec précision ; lire des textes documentaires ; restituer des observations.",
+      attendus: [
+        "Identifier les trois états de la matière et observer des changements d'états.",
+        "Identifier un changement d'état de l'eau dans un phénomène de la vie quotidienne.",
+      ],
+    },
+    {
+      nom: "Questionner le monde des objets techniques",
+      domainesSocle: ["D1","D2","D4","D5"],
+      competences: "S'approprier des outils et des méthodes : choisir ou utiliser le matériel adapté ; manipuler avec soin. Pratiquer des langages : communiquer à l'oral et à l'écrit avec précision ; lire des textes documentaires ; restituer des observations. Pratiquer des démarches scientifiques : pratiquer, avec l'aide des enseignants, quelques moments d'une démarche d'investigation. Imaginer, réaliser : observer des objets simples et des situations de la vie quotidienne ; imaginer et réaliser des objets simples et de petits montages.",
+      attendus: [
+        "Comprendre la fonction et le fonctionnement d'objets fabriqués.",
+        "Réaliser quelques objets et circuits électriques simples, en respectant des règles élémentaires de sécurité.",
+        "Commencer à s'approprier un environnement numérique.",
+      ],
+    },
+  ],
+  C3: [
+    {
+      nom: "Le vivant, sa diversité et les fonctions qui le caractérisent",
+      domainesSocle: ["D1","D2","D4","D5"],
+      competences: "Pratiquer des démarches scientifiques et technologiques (D4) : formuler une question ou une problématique simple ; proposer une ou des hypothèses ; proposer des expériences pour tester une hypothèse ; interpréter un résultat ; formaliser sa recherche à l'écrit ou à l'oral. Concevoir, créer, réaliser (D4/D5). S'approprier des outils et des méthodes (D2) : choisir le matériel adapté, mesurer, garder une trace écrite, mener des recherches documentaires. Pratiquer des langages (D1) : rendre compte avec un vocabulaire précis, exploiter des documents, utiliser différents modes de représentation.",
+      attendus: [
+        "Classer les organismes, exploiter les liens de parenté pour comprendre et expliquer l'évolution des organismes.",
+        "Expliquer les besoins variables en aliments de l'être humain ; l'origine et les techniques mises en œuvre pour transformer et conserver les aliments.",
+        "Apprendre à devenir responsable pour sa santé : prévenir les comportements à risques (addictions…).",
+        "Décrire comment les êtres vivants se développent et deviennent aptes à se reproduire.",
+        "Expliquer l'origine de la matière organique des êtres vivants et son devenir.",
+      ],
+    },
+    {
+      nom: "Matière, mouvement, énergie, information",
+      domainesSocle: ["D1","D2","D4","D5"],
+      competences: "Pratiquer des démarches scientifiques et technologiques (D4) : formuler une question ou une problématique simple ; proposer une ou des hypothèses ; proposer des expériences pour tester une hypothèse ; interpréter un résultat ; formaliser sa recherche à l'écrit ou à l'oral. Concevoir, créer, réaliser (D4/D5). S'approprier des outils et des méthodes (D2) : choisir le matériel adapté, mesurer, garder une trace écrite, mener des recherches documentaires. Pratiquer des langages (D1) : rendre compte avec un vocabulaire précis, exploiter des documents, utiliser différents modes de représentation.",
+      attendus: [
+        "Décrire les états et la constitution de la matière à l'échelle macroscopique.",
+        "Observer et décrire différents types de mouvements.",
+        "Identifier différentes ressources en énergie et connaître quelques conversions d'énergie.",
+        "Identifier un signal et une information.",
+      ],
+    },
+    {
+      nom: "Matériaux et objets techniques",
+      domainesSocle: ["D1","D2","D4","D5"],
+      competences: "Pratiquer des démarches scientifiques et technologiques (D4) : formuler une question ou une problématique simple ; proposer une ou des hypothèses ; proposer des expériences pour tester une hypothèse ; interpréter un résultat ; formaliser sa recherche à l'écrit ou à l'oral. Concevoir, créer, réaliser (D4/D5). S'approprier des outils et des méthodes (D2) : choisir le matériel adapté, mesurer, garder une trace écrite, mener des recherches documentaires. Pratiquer des langages (D1) : rendre compte avec un vocabulaire précis, exploiter des documents, utiliser différents modes de représentation.",
+      attendus: [
+        "Identifier les principales évolutions du besoin et des objets.",
+        "Décrire le fonctionnement d'objets techniques, leurs fonctions et leurs constitutions.",
+        "Identifier les principales familles de matériaux.",
+        "Concevoir et produire tout ou partie d'un objet technique en équipe pour traduire une solution technologique répondant à un besoin.",
+        "Repérer et comprendre la communication et la gestion de l'information.",
+      ],
+    },
+    {
+      nom: "La planète Terre. Les êtres vivants dans leur environnement",
+      domainesSocle: ["D1","D2","D4","D5"],
+      competences: "Pratiquer des démarches scientifiques et technologiques (D4) : formuler une question ou une problématique simple ; proposer une ou des hypothèses ; proposer des expériences pour tester une hypothèse ; interpréter un résultat ; formaliser sa recherche à l'écrit ou à l'oral. Concevoir, créer, réaliser (D4/D5). S'approprier des outils et des méthodes (D2) : choisir le matériel adapté, mesurer, garder une trace écrite, mener des recherches documentaires. Pratiquer des langages (D1) : rendre compte avec un vocabulaire précis, exploiter des documents, utiliser différents modes de représentation.",
+      attendus: [
+        "Situer la Terre dans le système solaire et caractériser les conditions de la vie terrestre.",
+        "Identifier des enjeux liés à l'environnement.",
+      ],
+    },
+  ],
+};
+/* Aide condensée par étape (objectifs + rôle de l'enseignant), affichée au survol/clic du titre */
+const STEP_HELP = {
+  situation: {
+    objectifs: ["Éveiller la curiosité et l'intérêt", "Créer un questionnement", "Introduire le phénomène à explorer"],
+    role: ["Proposer une situation riche et accessible", "Valoriser toutes les réactions des élèves", "Relancer sans donner de réponse"]
+  },
+  questionnement: {
+    objectifs: ["Formuler une ou plusieurs questions", "Cibler le problème à résoudre", "Définir l'objectif de la recherche"],
+    role: ["Aider à trier et faire émerger les idées", "Guider vers la question la plus investigable", "S'assurer qu'elle est claire et adaptée"]
+  },
+  hypotheses: {
+    objectifs: ["Mobiliser connaissances et imagination", "Formuler des réponses possibles à tester", "Justifier et prédire un résultat"],
+    role: ["Encourager toutes les idées sans juger", "Aider à formuler et justifier", "Rappeler qu'il n'y a pas de mauvaise idée"]
+  },
+  investigation: {
+    objectifs: ["Tester les hypothèses (expérience, observation)", "Recueillir des données fiables", "Respecter les règles de sécurité"],
+    role: ["Expliquer le protocole et les consignes", "Organiser matériel et groupes", "Accompagner sans donner la réponse"]
+  },
+  miseEnCommun: {
+    objectifs: ["Présenter ses résultats clairement", "Comparer et confronter les idées", "Dégager points communs et différences"],
+    role: ["Organiser les prises de parole", "Garantir un climat d'écoute", "Relancer la discussion par des questions"]
+  },
+  structuration: {
+    objectifs: ["Synthétiser les résultats et idées essentielles", "Construire une trace écrite claire", "Valider et corriger les erreurs"],
+    role: ["Guider pour dégager l'essentiel", "Aider à rédiger la trace écrite collective", "Enrichir le vocabulaire abordé"]
+  },
+  reinvestissement: {
+    objectifs: ["Mobiliser les connaissances ailleurs", "Transférer les savoirs à un nouveau contexte", "Ancrer les apprentissages"],
+    role: ["Proposer une situation nouvelle et porteuse de sens", "Accompagner sans donner la réponse", "Valoriser réussites et progrès"]
+  }
+};
+/* Adresse qui recevra les séquences par email, et étiquette conseillée pour le filtre Gmail */
+const CONSEILLER_EMAIL = "vincent.renais@gouv.nc";
+const SUBJECT_TAG = "[SEQ-ST]";
+
+/* ============================================================ ÉTAT ============================================================ */
+/* ============================================================ CRÉATION DE .ZIP (sans dépendance externe) ============================================================ */
+function strToUint8(str){ return new TextEncoder().encode(str); }
+
+const CRC_TABLE = (function(){
+  const table=[];
+  for(let n=0;n<256;n++){
+    let c=n;
+    for(let k=0;k<8;k++){ c=(c&1)?(0xEDB88320 ^ (c>>>1)):(c>>>1); }
+    table[n]=c;
+  }
+  return table;
+})();
+function crc32(buf){
+  let crc=0 ^ (-1);
+  for(let i=0;i<buf.length;i++){ crc=(crc>>>8) ^ CRC_TABLE[(crc ^ buf[i]) & 0xFF]; }
+  return (crc ^ (-1)) >>> 0;
+}
+function dosTime(d){ return ((d.getHours()&0x1F)<<11) | ((d.getMinutes()&0x3F)<<5) | (Math.floor(d.getSeconds()/2)&0x1F); }
+function dosDate(d){ return (((d.getFullYear()-1980)&0x7F)<<9) | (((d.getMonth()+1)&0xF)<<5) | (d.getDate()&0x1F); }
+
+function createZip(files){
+  const now=new Date(); const time=dosTime(now), date=dosDate(now);
+  const localParts=[], centralParts=[]; let offset=0;
+  files.forEach(f=>{
+    const nameBytes=strToUint8(f.name); const data=f.data;
+    const crc=crc32(data); const size=data.length;
+
+    const local=new DataView(new ArrayBuffer(30));
+    local.setUint32(0,0x04034b50,true); local.setUint16(4,20,true); local.setUint16(6,0,true);
+    local.setUint16(8,0,true); local.setUint16(10,time,true); local.setUint16(12,date,true);
+    local.setUint32(14,crc,true); local.setUint32(18,size,true); local.setUint32(22,size,true);
+    local.setUint16(26,nameBytes.length,true); local.setUint16(28,0,true);
+    const localHeaderBytes=new Uint8Array(local.buffer);
+    localParts.push(localHeaderBytes, nameBytes, data);
+
+    const central=new DataView(new ArrayBuffer(46));
+    central.setUint32(0,0x02014b50,true); central.setUint16(4,20,true); central.setUint16(6,20,true);
+    central.setUint16(8,0,true); central.setUint16(10,0,true); central.setUint16(12,time,true); central.setUint16(14,date,true);
+    central.setUint32(16,crc,true); central.setUint32(20,size,true); central.setUint32(24,size,true);
+    central.setUint16(28,nameBytes.length,true); central.setUint16(30,0,true); central.setUint16(32,0,true);
+    central.setUint16(34,0,true); central.setUint16(36,0,true); central.setUint32(38,0,true);
+    central.setUint32(42,offset,true);
+    const centralHeaderBytes=new Uint8Array(central.buffer);
+    centralParts.push(centralHeaderBytes, nameBytes);
+
+    offset += localHeaderBytes.length + nameBytes.length + data.length;
+  });
+  const centralSize=centralParts.reduce((a,p)=>a+p.length,0);
+  const centralOffset=offset;
+  const end=new DataView(new ArrayBuffer(22));
+  end.setUint32(0,0x06054b50,true); end.setUint16(4,0,true); end.setUint16(6,0,true);
+  end.setUint16(8,files.length,true); end.setUint16(10,files.length,true);
+  end.setUint32(12,centralSize,true); end.setUint32(16,centralOffset,true); end.setUint16(20,0,true);
+
+  return new Blob([...localParts, ...centralParts, new Uint8Array(end.buffer)], {type:'application/zip'});
+}
+
+const app = {
+  state:{ view:'home', cycle:'C1', theme:null, form:null, hasDownloaded:false },
+
+  blankSeance(){
+    const steps={}; STEPS.forEach(([k])=>{ steps[k]={enseignant:'',eleve:'',consigne:'',materiel:'',modalite:''}; });
+    return {titre:'', objectifOp:'', differenciation:'', steps, collapsedSteps:{}, endedEarly:false, resumeAt:null, rappel:'', bilan:''};
+  },
+  findProgrammeMatch(cycle, attenduText){
+    const comps=PROGRAMMES_DATA[cycle]||[];
+    for(const comp of comps){
+      const idx=comp.attendus.findIndex(a=>a.trim()===((attenduText||'').trim()));
+      if(idx>-1) return {comp, attenduIdx:idx};
+    }
+    return null;
+  },
+  blankForm(theme, cycle){
+    const match=this.findProgrammeMatch(cycle, theme.obj);
+    return {
+      cycle, theme: theme.t,
+      teacherName:'', school:'', niveauClasse:'', nbEleves:'',
+      domaineSocle: match ? [...match.comp.domainesSocle] : [], domaineEnseignement:DOMAINE_ENSEIGNEMENT_PAR_CYCLE[cycle]||'Sciences et technologie', composante: match ? match.comp.nom : '',
+      attendu: theme.obj, objectif:'', vocabulaire:'', prerequis:'', materiel:'', evaluation:'',
+      nbSeances:3, seanceTitles:['','',''], currentSeanceIndex:0,
+      seances:[this.blankSeance(),this.blankSeance(),this.blankSeance()]
+    };
+  },
+  updateProgDomaine(compNom){
+    const f=this.state.form;
+    f.composante=compNom;
+    const comp=(PROGRAMMES_DATA[f.cycle]||[]).find(c=>c.nom===compNom);
+    if(comp){ f.domaineSocle=[...comp.domainesSocle]; f.attendu=''; }
+    else { f.domaineSocle=[]; f.attendu=''; }
+    this.markDirty();
+    this.render();
+  },
+  updateProgAttendu(attenduText){
+    const f=this.state.form;
+    f.attendu=attenduText;
+    const found=(PROGRAMMES_DATA[f.cycle]||[]).find(c=>c.attendus.includes(attenduText));
+    if(found){ f.composante=found.nom; f.domaineSocle=[...found.domainesSocle]; }
+    this.markDirty();
+    this.render();
+  },
+
+  setView(v){ this.state.view=v; window.scrollTo({top:0,behavior:'smooth'}); this.render(); },
+  chooseCycle(c){ this.state.cycle=c; this.render(); },
+
+  chooseTheme(cycle, idx){
+    const theme=THEMES[cycle][idx];
+    this.state.theme=theme;
+    this.state.form=this.blankForm(theme, cycle);
+    this.state.hasDownloaded=false;
+    this.setView('sequence');
+  },
+
+  triggerImport(){ document.getElementById('import-input').click(); },
+  handleImportFile(file){
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=(evt)=>{
+      try{
+        const data=JSON.parse(evt.target.result);
+        if(!data.cycle || !data.theme || !data.seances){ alert("Ce fichier ne ressemble pas à une séquence valide."); return; }
+        const idx=THEMES[data.cycle] ? THEMES[data.cycle].findIndex(t=>t.t===data.theme) : -1;
+        this.state.theme = idx>-1 ? THEMES[data.cycle][idx] : {t:data.theme, obj:data.attendu||'', cat:'', ex:''};
+        this.state.cycle = data.cycle;
+        this.state.form = data;
+        this.state.hasDownloaded=false;
+        if(typeof this.state.form.currentSeanceIndex !== 'number') this.state.form.currentSeanceIndex=0;
+        this.setView('sequence');
+      }catch(e){ alert("Impossible de lire ce fichier : "+e.message); }
+    };
+    reader.readAsText(file);
+  },
+
+  markDirty(){ this.state.hasDownloaded=false; },
+  updateForm(field, value){ this.state.form[field]=value; this.markDirty(); },
+  toggleSocle(code){
+    const f=this.state.form; const i=f.domaineSocle.indexOf(code);
+    if(i>-1) f.domaineSocle.splice(i,1); else f.domaineSocle.push(code);
+    this.markDirty();
+  },
+  updateNbSeances(n){
+    n=Math.max(1, Math.min(10, parseInt(n)||1));
+    const f=this.state.form;
+    f.nbSeances=n;
+    while(f.seanceTitles.length<n){ f.seanceTitles.push(''); f.seances.push(this.blankSeance()); }
+    while(f.seanceTitles.length>n){ f.seanceTitles.pop(); f.seances.pop(); }
+    this.markDirty();
+    this.render();
+  },
+  updateSeanceTitle(i,val){ this.state.form.seanceTitles[i]=val; this.state.form.seances[i].titre=val; this.markDirty(); },
+
+  goToSeances(){
+    const f=this.state.form;
+    if(!f.teacherName.trim()){ alert("Merci d'indiquer votre nom avant de continuer."); return; }
+    f.seances.forEach((s,i)=>{ s.titre=f.seanceTitles[i]; });
+    f.currentSeanceIndex=0;
+    this.setView('seances');
+  },
+  backFromSeances(){
+    const i=this.state.form.currentSeanceIndex||0;
+    if(i>0) this.goToSeanceIndex(i-1); else this.setView('sequence');
+  },
+  goToSeanceIndex(idx){ this.state.form.currentSeanceIndex=idx; this.setView('seances'); },
+  updateSeanceField(i,field,val){ this.state.form.seances[i][field]=val; this.markDirty(); },
+  updateSeanceStepField(i,stepKey,subKey,val){ this.state.form.seances[i].steps[stepKey][subKey]=val; this.markDirty(); },
+  toggleStepCollapse(i, stepKey){
+    const cs=this.state.form.seances[i].collapsedSteps;
+    cs[stepKey]=!cs[stepKey];
+    this.render();
+  },
+  toggleEndedEarly(i, checked){
+    const s=this.state.form.seances[i];
+    s.endedEarly=checked;
+    if(checked && !s.resumeAt) s.resumeAt=this.autoDetectResume(s);
+    this.markDirty();
+    this.render();
+  },
+  autoDetectResume(seance){
+    for(let idx=1; idx<STEPS.length; idx++){
+      const st=seance.steps[STEPS[idx][0]];
+      if(!st.enseignant && !st.eleve && !st.consigne) return idx+1;
+    }
+    return 7;
+  },
+  computeResumeStart(i){
+    if(i===0) return 1;
+    const prev=this.state.form.seances[i-1];
+    if(prev.endedEarly && prev.resumeAt) return prev.resumeAt;
+    return 1;
+  },
+  finishSeance(i){
+    const f=this.state.form;
+    if(i < f.seances.length-1){ this.goToSeanceIndex(i+1); }
+    else { this.setView('review'); }
+  },
+
+  restart(){ this.state.view='home'; this.state.theme=null; this.state.form=null; this.state.hasDownloaded=false; this.setView('home'); },
+
+  slugify(s){
+    return (s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'sequence';
+  },
+
+  /* ---------- fichier .zip (JSON + version imprimable) ---------- */
+  /* ---------- génération d'un vrai fichier Word (.docx) pour l'enseignant ---------- */
+  docxEsc(s){
+    return (s===undefined||s===null?'':String(s))
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+  },
+  docxRun(text, opts){
+    opts=opts||{};
+    const props=[];
+    if(opts.bold) props.push('<w:b/>');
+    if(opts.italic) props.push('<w:i/>');
+    if(opts.color) props.push('<w:color w:val="'+opts.color+'"/>');
+    if(opts.size) props.push('<w:sz w:val="'+(opts.size*2)+'"/>');
+    const rPr=props.length?'<w:rPr>'+props.join('')+'</w:rPr>':'';
+    const lines=String(text||'').split('\n');
+    const t=lines.map((l,i)=>(i>0?'<w:br/>':'')+'<w:t xml:space="preserve">'+this.docxEsc(l)+'</w:t>').join('');
+    return '<w:r>'+rPr+t+'</w:r>';
+  },
+  docxPara(text, opts){
+    opts=opts||{};
+    const pProps=[];
+    if(opts.style) pProps.push('<w:pStyle w:val="'+opts.style+'"/>');
+    pProps.push('<w:spacing w:after="'+(opts.spacingAfter!==undefined?opts.spacingAfter:120)+'"/>');
+    const pPr='<w:pPr>'+pProps.join('')+'</w:pPr>';
+    return '<w:p>'+pPr+this.docxRun(text, opts)+'</w:p>';
+  },
+  docxCell(text, opts){
+    opts=opts||{};
+    const shade=opts.shade?'<w:shd w:val="clear" w:color="auto" w:fill="'+opts.shade+'"/>':'';
+    return '<w:tc><w:tcPr><w:tcW w:w="'+(opts.width||2000)+'" w:type="dxa"/>'+shade+'</w:tcPr>'+this.docxPara(text,{bold:opts.bold,spacingAfter:0})+'</w:tc>';
+  },
+  docxTable(rowsCells){
+    const rows=rowsCells.map(cells=>'<w:tr>'+cells.join('')+'</w:tr>').join('');
+    return '<w:tbl><w:tblPr><w:tblStyle w:val="TableGrid"/><w:tblW w:w="0" w:type="auto"/><w:tblBorders>'
+      +'<w:top w:val="single" w:sz="4" w:color="D6D0B5"/><w:left w:val="single" w:sz="4" w:color="D6D0B5"/>'
+      +'<w:bottom w:val="single" w:sz="4" w:color="D6D0B5"/><w:right w:val="single" w:sz="4" w:color="D6D0B5"/>'
+      +'<w:insideH w:val="single" w:sz="4" w:color="D6D0B5"/><w:insideV w:val="single" w:sz="4" w:color="D6D0B5"/>'
+      +'</w:tblBorders></w:tblPr>'+rows+'</w:tbl>';
+  },
+  buildDocxXml(e){
+    let body='';
+    body+=this.docxPara(e.theme, {style:'Titre', size:26, bold:true, spacingAfter:40});
+    body+=this.docxPara(CYCLE_LABEL[e.cycle]||e.cycle, {italic:true, color:'5C7A80', spacingAfter:200});
+
+    body+=this.docxTable([
+      [this.docxCell("Enseignant·e",{bold:true,width:2450,shade:'EFEBD8'}), this.docxCell(e.teacherName,{width:2916}), this.docxCell("École",{bold:true,width:1800,shade:'EFEBD8'}), this.docxCell(e.school,{width:3300})],
+      [this.docxCell("Niveau / Classe",{bold:true,width:2450,shade:'EFEBD8'}), this.docxCell(e.niveauClasse,{width:2916}), this.docxCell("Nb élèves",{bold:true,width:1800,shade:'EFEBD8'}), this.docxCell(e.nbEleves,{width:3300})],
+      [this.docxCell("Domaines du socle",{bold:true,width:2450,shade:'EFEBD8'}), this.docxCell((e.domaineSocle||[]).join(', ')||'—',{width:8016})],
+      [this.docxCell("Domaine d'enseignement",{bold:true,width:2450,shade:'EFEBD8'}), this.docxCell(e.domaineEnseignement,{width:2916}), this.docxCell("Composante",{bold:true,width:1800,shade:'EFEBD8'}), this.docxCell(e.composante,{width:3300})],
+    ]);
+    body+=this.docxPara('', {spacingAfter:100});
+    body+=this.docxTable([
+      [this.docxCell("Attendu de fin de cycle",{bold:true,width:2800,shade:'EFEBD8'}), this.docxCell(e.attendu,{width:7666})],
+      [this.docxCell("Objectif général",{bold:true,width:2800,shade:'EFEBD8'}), this.docxCell(e.objectif||'—',{width:7666})],
+      [this.docxCell("Vocabulaire spécifique",{bold:true,width:2800,shade:'EFEBD8'}), this.docxCell(e.vocabulaire||'—',{width:7666})],
+      [this.docxCell("Prérequis",{bold:true,width:2800,shade:'EFEBD8'}), this.docxCell(e.prerequis||'—',{width:7666})],
+      [this.docxCell("Matériel",{bold:true,width:2800,shade:'EFEBD8'}), this.docxCell(e.materiel||'—',{width:7666})],
+      [this.docxCell("Évaluation / Critères",{bold:true,width:2800,shade:'EFEBD8'}), this.docxCell(e.evaluation||'—',{width:7666})],
+    ]);
+    body+=this.docxPara('', {spacingAfter:100});
+
+    if((e.seances||[]).length){
+      const recapRows=[[this.docxCell("N°",{bold:true,width:800,shade:'EFEBD8'}), this.docxCell("Titre de la séance",{bold:true,width:3700,shade:'EFEBD8'}), this.docxCell("Objectif opérationnel",{bold:true,width:5966,shade:'EFEBD8'})]];
+      e.seances.forEach((s,i)=>{ recapRows.push([this.docxCell(String(i+1),{width:800}), this.docxCell(s.titre||'(sans titre)',{width:3700}), this.docxCell(s.objectifOp||'—',{width:5966})]); });
+      body+=this.docxTable(recapRows);
+      body+=this.docxPara('', {spacingAfter:200});
+    }
+
+    (e.seances||[]).forEach((s,i)=>{
+      const materielList=[...new Set(STEPS.map(([key])=>(s.steps[key]||{}).materiel).filter(m=>m&&m.trim()).map(m=>m.trim()))];
+      body+=this.docxPara('Séance '+(i+1)+' — '+(s.titre||'(sans titre)'), {style:'Titre2', bold:true, size:18, spacingAfter:80});
+      body+=this.docxPara('🎯 Objectif opérationnel : '+(s.objectifOp||'—'), {spacingAfter:80});
+      if(materielList.length) body+=this.docxPara('🧰 Matériel nécessaire : '+materielList.join(', '), {spacingAfter:80});
+      if(s.endedEarly) body+=this.docxPara('Séance interrompue — reprise prévue à l\'étape '+(s.resumeAt||'?'), {italic:true, color:'3E6E8E', spacingAfter:80});
+      if(s.rappel) body+=this.docxPara('Rappel de la séance précédente : '+s.rappel, {spacingAfter:80});
+
+      const visibleSteps = (s.endedEarly && s.resumeAt) ? STEPS.filter((step,idx)=>idx+1 < s.resumeAt) : STEPS;
+      const cols=this.activeStepColumns(s, visibleSteps);
+      if(cols.length){
+        const colWidth=Math.floor(8466/cols.length);
+        const stepRows=[[this.docxCell("Étape",{bold:true,width:2000,shade:'EFEBD8'})].concat(cols.map(c=>this.docxCell(c.label,{bold:true,width:colWidth,shade:'EFEBD8'})))];
+        visibleSteps.forEach(([key,label])=>{
+          const st=s.steps[key]||{};
+          stepRows.push([this.docxCell(label,{bold:true,width:2000})].concat(cols.map(c=>this.docxCell(st[c.key]||'—',{width:colWidth}))));
+        });
+        body+=this.docxTable(stepRows);
+      } else {
+        body+=this.docxPara('Aucune étape renseignée pour cette séance.', {italics:true, color:'5C7A80', spacingAfter:80});
+      }
+      if(s.differenciation) body+=this.docxPara('🎛️ Différenciation : '+s.differenciation, {spacingAfter:80});
+      if(s.bilan) body+=this.docxPara('Bilan de la séance / Trace écrite : '+s.bilan, {spacingAfter:80});
+      body+=this.docxPara('', {spacingAfter:200});
+    });
+
+    return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+      +'<w:body>'+body+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="720" w:right="720" w:bottom="720" w:left="720"/></w:sectPr></w:body></w:document>';
+  },
+  downloadDocx(){
+    const f=this.state.form;
+    const base=this.fileNameBase();
+    const documentXml=this.buildDocxXml(f);
+    const contentTypes='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+      +'<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
+      +'<Default Extension="xml" ContentType="application/xml"/>'
+      +'<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
+      +'<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
+      +'<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>'
+      +'</Types>';
+    const rootRels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+      +'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
+      +'<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>'
+      +'</Relationships>';
+    const docRels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+      +'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'
+      +'</Relationships>';
+    const styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+      +'<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/><w:sz w:val="21"/></w:rPr></w:rPrDefault></w:docDefaults>'
+      +'<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style>'
+      +'<w:style w:type="paragraph" w:styleId="Titre"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:rPr><w:b/><w:sz w:val="40"/><w:color w:val="17323A"/></w:rPr></w:style>'
+      +'<w:style w:type="paragraph" w:styleId="Titre2"><w:name w:val="Heading2"/><w:basedOn w:val="Normal"/><w:rPr><w:b/><w:sz w:val="26"/><w:color w:val="2F5233"/></w:rPr></w:style>'
+      +'<w:style w:type="table" w:styleId="TableGrid"><w:name w:val="Table Grid"/></w:style>'
+      +'</w:styles>';
+    const coreProps='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      +'<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/">'
+      +'<dc:title>'+this.docxEsc(f.theme)+'</dc:title><dc:creator>'+this.docxEsc(f.teacherName)+'</dc:creator>'
+      +'</cp:coreProperties>';
+
+    const blob=createZip([
+      {name:'[Content_Types].xml', data: strToUint8(contentTypes)},
+      {name:'_rels/.rels', data: strToUint8(rootRels)},
+      {name:'word/document.xml', data: strToUint8(documentXml)},
+      {name:'word/_rels/document.xml.rels', data: strToUint8(docRels)},
+      {name:'word/styles.xml', data: strToUint8(styles)},
+      {name:'docProps/core.xml', data: strToUint8(coreProps)},
+    ]);
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download=base+'.docx';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url), 2000);
+    this.state.hasDownloaded=true;
+  },
+  fileNameBase(){
+    const f=this.state.form;
+    return 'Sequence_'+f.cycle+'_'+this.slugify(f.theme)+'_'+this.slugify(f.teacherName);
+  },
+  downloadZip(){
+    const f=this.state.form;
+    const base=this.fileNameBase();
+    const jsonBytes=strToUint8(JSON.stringify(f, null, 2));
+    const blob=createZip([
+      {name: base+'.json', data: jsonBytes}
+    ]);
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download=base+'.zip';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url), 2000);
+    this.state.hasDownloaded=true;
+  },
+
+  /* ---------- email : webmail direct (Gmail / Outlook) ou logiciel local, + copie de secours ---------- */
+  emailParts(){
+    const f=this.state.form;
+    const subject=SUBJECT_TAG+' '+CYCLE_LABEL[f.cycle]+' — '+f.theme+' — '+(f.teacherName||'sans nom');
+    const body=
+      "Bonjour,\n\n"+
+      "Récapitulatif de l'envoi :\n"+
+      "- Groupe / enseignant·e : "+(f.teacherName||'—')+"\n"+
+      "- École : "+(f.school||'—')+"\n"+
+      "- Cycle : "+CYCLE_LABEL[f.cycle]+"\n"+
+      "- Séquence : "+f.theme+"\n"+
+      "- Niveau / classe : "+(f.niveauClasse||'—')+"\n\n"+
+      "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️\n"+
+      "N'OUBLIEZ PAS DE METTRE LE FICHIER ZIP EN PIÈCE JOINTE AVANT D'ENVOYER !\n"+
+      "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️\n\n"+
+      "Cordialement";
+    return {subject, body};
+  },
+  openGmailWeb(){
+    const {subject, body}=this.emailParts();
+    window.open("https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(CONSEILLER_EMAIL)+"&su="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body), '_blank');
+  },
+  copyEmailText(){
+    const {subject, body}=this.emailParts();
+    const text="À : "+CONSEILLER_EMAIL+"\nObjet : "+subject+"\n\n"+body+"\n\n(N'oubliez pas de joindre le fichier .zip téléchargé.)";
+    navigator.clipboard && navigator.clipboard.writeText(text);
+    alert("Le texte de l'email a été copié. Ouvrez votre messagerie, créez un nouveau message vers "+CONSEILLER_EMAIL+", et collez (Ctrl+V) ce texte.");
+  },
+
+  activeStepColumns(s, stepsSubset){
+    const list = stepsSubset || STEPS;
+    const cols=[
+      {key:'modalite', label:'Modalité'},
+      {key:'enseignant', label:"Rôle de l'enseignant"},
+      {key:'eleve', label:"Rôle de l'élève"},
+      {key:'consigne', label:'Consignes données'},
+    ];
+    return cols.filter(c => list.some(([key])=>{ const st=s.steps[key]||{}; return (st[c.key]||'').trim(); }));
+  },
+  entryDetailHTML(e){
+    let html=`<div class="chapeau">
+      <h2 style="margin-bottom:2px;">${this.esc(e.theme)}</h2>
+      <p style="color:var(--ink-soft);margin-top:0;">${CYCLE_LABEL[e.cycle]||e.cycle}</p>
+      <table>
+        <tr><th>Enseignant·e</th><td>${this.esc(e.teacherName)}</td><th>École</th><td>${this.esc(e.school)}</td></tr>
+        <tr><th>Niveau / Classe</th><td>${this.esc(e.niveauClasse)}</td><th>Nb élèves</th><td>${this.esc(e.nbEleves)}</td></tr>
+        <tr><th>Domaines du socle</th><td colspan="3">${this.esc((e.domaineSocle||[]).join(', '))||'—'}</td></tr>
+        <tr><th>Domaine d'enseignement</th><td>${this.esc(e.domaineEnseignement)}</td><th>Composante</th><td>${this.esc(e.composante)}</td></tr>
+      </table>
+      <table>
+        <tr><th>Attendu de fin de cycle</th><td>${this.esc(e.attendu)}</td></tr>
+        <tr><th>Objectif général</th><td>${this.esc(e.objectif)||'—'}</td></tr>
+        <tr><th>Vocabulaire spécifique</th><td>${this.esc(e.vocabulaire)||'—'}</td></tr>
+        <tr><th>Prérequis</th><td>${this.esc(e.prerequis)||'—'}</td></tr>
+        <tr><th>Matériel</th><td>${this.esc(e.materiel)||'—'}</td></tr>
+        <tr><th>Évaluation / Critères</th><td>${this.esc(e.evaluation)||'—'}</td></tr>
+      </table>
+    </div>`;
+    if((e.seances||[]).length){
+      html+=`<table style="margin-top:4px;margin-bottom:22px;">
+        <tr><th style="width:8%;">N°</th><th style="width:32%;">Titre de la séance</th><th>Objectif opérationnel</th></tr>
+        ${e.seances.map((s,i)=>`<tr><td>${i+1}</td><td>${this.esc(s.titre)||'(sans titre)'}</td><td>${this.esc(s.objectifOp)||'—'}</td></tr>`).join('')}
+      </table>`;
+    }
+    (e.seances||[]).forEach((s,i)=>{
+      const materielList=[...new Set(STEPS.map(([key])=>(s.steps[key]||{}).materiel).filter(m=>m && m.trim()).map(m=>m.trim()))];
+      const visibleSteps = (s.endedEarly && s.resumeAt) ? STEPS.filter((step,idx)=>idx+1 < s.resumeAt) : STEPS;
+      const cols=this.activeStepColumns(s, visibleSteps);
+      const stepsTable = cols.length ? `<table>
+          <tr><th>Étape</th>${cols.map(c=>`<th>${c.label}</th>`).join('')}</tr>
+          ${visibleSteps.map(([key,label])=>{ const st=s.steps[key]||{}; return `<tr><td><strong>${label}</strong></td>${cols.map(c=>`<td>${this.esc(st[c.key])||'—'}</td>`).join('')}</tr>`; }).join('')}
+        </table>` : `<p style="font-size:12.5px;color:var(--ink-soft);font-style:italic;">Aucune étape renseignée pour cette séance.</p>`;
+      html+=`<div class="seance">
+        <h3>Séance ${i+1} — ${this.esc(s.titre)||'(sans titre)'}</h3>
+        <p style="font-size:13.5px;"><strong>🎯 Objectif opérationnel :</strong> ${this.esc(s.objectifOp)||'—'}</p>
+        ${materielList.length?`<div style="background:#F5F1E4;border-radius:8px;padding:9px 13px;margin-bottom:10px;font-size:12.5px;"><strong>🧰 Matériel nécessaire pour cette séance :</strong> ${this.esc(materielList.join(', '))}</div>`:''}
+        ${s.endedEarly?`<p style="font-size:12.5px;color:var(--sky);"><em>Séance interrompue — reprise prévue à l'étape ${s.resumeAt||'?'}. Les étapes suivantes ne sont pas encore abordées.</em></p>`:''}
+        ${s.rappel?`<p style="font-size:12.5px;"><strong>Rappel de la séance précédente :</strong> ${this.esc(s.rappel)}</p>`:''}
+        ${stepsTable}
+        ${s.differenciation?`<p style="font-size:13px;"><strong>🎛️ Différenciation :</strong> ${this.esc(s.differenciation)}</p>`:''}
+        ${s.bilan?`<p style="font-size:13px;"><strong>Bilan de la séance / Trace écrite :</strong> ${this.esc(s.bilan)}</p>`:''}
+      </div>`;
+    });
+    return html;
+  },
+  printEntry(e){
+    const body=this.entryDetailHTML(e);
+    const html=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>${this.esc(e.theme)} — Fiche séquence</title>
+    <style>
+      body{font-family:Georgia,'Times New Roman',serif;color:#1D2B22;padding:32px;max-width:900px;margin:0 auto;}
+      h2{margin-bottom:2px;} h3{margin-bottom:4px;}
+      table{width:100%;border-collapse:collapse;margin-bottom:14px;}
+      th,td{border:1px solid #999;padding:7px 9px;font-size:12.5px;text-align:left;vertical-align:top;}
+      th{background:#EFEBD8;width:20%;}
+      .seance{margin-top:20px;padding-top:14px;border-top:2px solid #999;page-break-inside:avoid;}
+      @media print{ body{padding:10px;} }
+    </style></head><body>${body}
+    <script>window.onload=function(){ setTimeout(function(){ window.print(); }, 300); };<\/script>
+    </body></html>`;
+    const w=window.open('', '_blank');
+    if(!w){ alert("Veuillez autoriser les fenêtres pop-up pour générer le PDF (utilisez ensuite « Imprimer → Enregistrer en PDF »)."); return; }
+    w.document.write(html); w.document.close();
+  },
+
+  esc(s){ return (s===undefined||s===null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); },
+
+  /* ============================================================ RENDER ============================================================ */
+  render(){
+    const el=document.getElementById('app'); const s=this.state;
+    let html=this.renderTopbar();
+    if(s.view==='home') html+=this.renderHome();
+    else if(s.view==='sequence') html+=this.renderSequenceForm();
+    else if(s.view==='seances') html+=this.renderSeances();
+    else if(s.view==='review') html+=this.renderReview();
+    el.innerHTML=html;
+    this.attachHandlers();
+    el.querySelectorAll('textarea, input[type=text]').forEach(node=>{
+      node.setAttribute('spellcheck','true');
+      node.setAttribute('lang','fr');
+    });
+  },
+
+  renderTopbar(){
+    return `
+    <div class="topbar">
+      <div class="brand" onclick="app.restart()">
+        <div class="mark">S·T</div>
+        <div><div class="title">Carnet de séquences</div><div class="sub">Sciences et technologie — Cycles 1, 2, 3 — Nouvelle-Calédonie</div></div>
+      </div>
+      <button class="import-link" onclick="app.triggerImport()">📂 Reprendre un travail (.json)</button>
+    </div>`;
+  },
+
+  renderHome(){
+    const s=this.state;
+    const tabs=['C1','C2','C3'].map(c=>`<button class="tab ${c===s.cycle?'active':''}" onclick="app.chooseCycle('${c}')"><span class="n">${c}</span><span class="label">${CYCLE_LABEL[c]}</span></button>`).join('');
+    const cards=THEMES[s.cycle].map((th,i)=>`
+      <div class="theme-card">
+        <span class="badge">${this.esc(th.cat)}</span>
+        <h3>${this.esc(th.t)}</h3>
+        <p>${this.esc(th.obj)}</p>
+        <p class="example">Exemple d'activité : ${this.esc(th.ex)}</p>
+        <button class="choose-btn" onclick="app.chooseTheme('${s.cycle}', ${i})">Choisir cette séquence →</button>
+      </div>`).join('');
+    return `
+    <p style="max-width:660px;color:var(--ink-soft);font-size:14.5px;">Choisissez un cycle puis une séquence. À la fin, vous pourrez télécharger votre travail en PDF et l'envoyer par email. Si vous aviez déjà commencé une séquence et téléchargé son fichier de données, utilisez « Reprendre un travail » en haut de la page pour continuer là où vous en étiez.</p>
+    <div class="tabs">${tabs}</div>
+    <div class="panel"><div class="theme-grid">${cards}</div></div>`;
+  },
+
+  renderSequenceForm(){
+    const f=this.state.form, th=this.state.theme;
+    const socleChecks=DOMAINES_SOCLE.map(([code,label])=>`<label class="check-pill"><input type="checkbox" ${f.domaineSocle.includes(code)?'checked':''} onchange="app.toggleSocle('${code}')"> ${code} — ${label}</label>`).join('');
+    return `
+    <div class="stamp-box"><span class="eyebrow">Séquence choisie · ${CYCLE_LABEL[f.cycle]}</span><h3>${this.esc(th.t)}</h3><p>${this.esc(th.obj)}</p></div>
+    <div class="panel">
+      <h2 style="margin-top:0;">Fiche séquence</h2>
+      <div class="row3">
+        <div class="field"><label>Votre nom *</label><input type="text" id="f-teacherName" value="${this.esc(f.teacherName)}"></div>
+        <div class="field"><label>École</label><input type="text" id="f-school" value="${this.esc(f.school)}"></div>
+        <div class="field"><label>Niveau / Classe</label><input type="text" id="f-niveauClasse" placeholder="ex. CE2" value="${this.esc(f.niveauClasse)}"></div>
+      </div>
+      <div class="field"><label>Nombre d'élèves</label><input type="text" id="f-nbEleves" style="max-width:160px;" value="${this.esc(f.nbEleves)}"></div>
+
+      <div class="field"><label>Domaines du socle concernés <span class="hint">Cochées automatiquement selon la composante choisie ci-dessous — modifiables</span></label><div class="checks">${socleChecks}</div></div>
+      <div class="row2">
+        <div class="field"><label>Domaine d'enseignement</label><input type="text" id="f-domaineEnseignement" value="${this.esc(f.domaineEnseignement)}"></div>
+        <div class="field"><label>Composante</label>
+          <select onchange="app.updateProgDomaine(this.value)">
+            <option value="">— Choisir —</option>
+            ${(PROGRAMMES_DATA[f.cycle]||[]).map(c=>`<option value="${this.esc(c.nom)}" ${f.composante===c.nom?'selected':''}>${this.esc(c.nom)}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Attendu de fin de cycle <span class="hint">Si une composante est choisie ci-dessus, la liste est filtrée ; sinon, tous les attendus du cycle sont proposés</span></label>
+        <select onchange="app.updateProgAttendu(this.value)">
+          <option value="">— Choisir —</option>
+          ${f.composante
+            ? ((PROGRAMMES_DATA[f.cycle]||[]).find(c=>c.nom===f.composante)?.attendus||[]).map(a=>`<option value="${this.esc(a)}" ${f.attendu===a?'selected':''}>${this.esc(a)}</option>`).join('')
+            : (PROGRAMMES_DATA[f.cycle]||[]).map(c=>`<optgroup label="${this.esc(c.nom)}">${c.attendus.map(a=>`<option value="${this.esc(a)}" ${f.attendu===a?'selected':''}>${this.esc(a)}</option>`).join('')}</optgroup>`).join('')
+          }
+        </select>
+      </div>
+      <div class="field"><label>Objectif général de la séquence</label><textarea id="f-objectif" placeholder="La visée générale de la séquence, dont chaque séance décline un objectif opérationnel précis">${this.esc(f.objectif)}</textarea></div>
+      <div class="row2">
+        <div class="field"><label>Vocabulaire spécifique</label><textarea id="f-vocabulaire">${this.esc(f.vocabulaire)}</textarea></div>
+        <div class="field"><label>Prérequis</label><textarea id="f-prerequis">${this.esc(f.prerequis)}</textarea></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Matériel</label><textarea id="f-materiel">${this.esc(f.materiel)}</textarea></div>
+        <div class="field"><label>Évaluation / Critères de réussite</label><textarea id="f-evaluation">${this.esc(f.evaluation)}</textarea></div>
+      </div>
+      <div class="field"><label>Nombre de séances</label><input type="number" id="f-nbSeances" min="1" max="10" value="${f.nbSeances}" style="max-width:120px;" onchange="app.updateNbSeances(this.value)"></div>
+      <div class="field"><label>Titres des séances</label>
+        ${f.seanceTitles.map((t,i)=>`<input type="text" style="margin-bottom:8px;" placeholder="Titre de la séance ${i+1}" value="${this.esc(t)}" oninput="app.updateSeanceTitle(${i}, this.value)">`).join('')}
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="app.restart()">← Changer de séquence</button>
+        <button class="btn btn-primary" onclick="app.goToSeances()">Continuer vers les séances →</button>
+      </div>
+    </div>`;
+  },
+
+  renderSeances(){
+    const f=this.state.form; const i=f.currentSeanceIndex||0; const s=f.seances[i];
+    const resumeStart=this.computeResumeStart(i);
+    const dots=f.seances.map((sc,idx)=>`<button class="dot ${idx===i?'active':''}" onclick="app.goToSeanceIndex(${idx})">${idx+1}</button>`).join('');
+    const rappelBox = resumeStart>1 ? `
+      <div class="stamp-box" style="border-color:var(--sky);background:var(--sky-soft);">
+        <span class="eyebrow" style="color:var(--sky);">Reprise de la séance précédente</span>
+        <h3>On reprend à l'étape ${resumeStart} — ${STEPS[resumeStart-1][1].replace(/^\d+\.\s*/,'')}</h3>
+        <label style="display:block;font-weight:600;font-size:13.5px;margin-top:8px;margin-bottom:4px;">Rappel de ce qui a été vu la dernière fois</label>
+        <textarea oninput="app.updateSeanceField(${i},'rappel',this.value)">${this.esc(s.rappel)}</textarea>
+      </div>` : '';
+    const stepsHtml=STEPS.map(([key,label],idx)=>{
+      const muted = idx+1 < resumeStart;
+      const st=s.steps[key];
+      const collapsed = (s.collapsedSteps[key] !== undefined) ? s.collapsedSteps[key] : muted;
+      const help=STEP_HELP[key];
+      const helpBox = help ? `
+        <div class="help-pop">
+          <strong>Objectifs de l'étape</strong>
+          <ul>${help.objectifs.map(o=>`<li>${this.esc(o)}</li>`).join('')}</ul>
+          <strong>Rôle de l'enseignant</strong>
+          <ul>${help.role.map(o=>`<li>${this.esc(o)}</li>`).join('')}</ul>
+        </div>` : '';
+      const body = collapsed ? '' : `
+        <div class="row3">
+          <div class="field"><label>Rôle de l'enseignant</label><textarea oninput="app.updateSeanceStepField(${i},'${key}','enseignant',this.value)">${this.esc(st.enseignant)}</textarea></div>
+          <div class="field"><label>Rôle de l'élève</label><textarea oninput="app.updateSeanceStepField(${i},'${key}','eleve',this.value)">${this.esc(st.eleve)}</textarea></div>
+          <div class="field"><label>Consignes données</label><textarea oninput="app.updateSeanceStepField(${i},'${key}','consigne',this.value)">${this.esc(st.consigne)}</textarea></div>
+        </div>
+        <div class="field materiel-line"><label>🧰 Matériel nécessaire</label><input type="text" value="${this.esc(st.materiel)}" oninput="app.updateSeanceStepField(${i},'${key}','materiel',this.value)" placeholder="ex. loupes, gobelets, graines, chronomètre..."></div>`;
+      return `<div class="step-row ${muted?'muted':''}">
+        <div class="step-row-head">
+          <button type="button" class="collapse-toggle" onclick="app.toggleStepCollapse(${i},'${key}')" title="${collapsed?'Déplier':'Replier'}">${collapsed?'▸':'▾'}</button>
+          <span class="help-trigger" tabindex="0" onclick="this.classList.toggle('show')">${label}${muted?' <span class="tag">déjà vue en séance précédente</span>':''} <span class="help-icon">ⓘ</span>${helpBox}</span>
+          <select class="modalite-select" onchange="app.updateSeanceStepField(${i},'${key}','modalite',this.value)">
+            <option value="">Modalité...</option>
+            ${MODALITES.map(m=>`<option value="${m}" ${st.modalite===m?'selected':''}>${m}</option>`).join('')}
+          </select>
+        </div>
+        ${body}
+      </div>`;
+    }).join('');
+    const endSessionBox = `
+      <div class="floating-endsession">
+        <div class="fe-icon">⏸</div>
+        <span class="fe-eyebrow">Fin de séance</span>
+        <label class="fe-check"><input type="checkbox" ${s.endedEarly?'checked':''} onchange="app.toggleEndedEarly(${i}, this.checked)"> Je m'arrête avant la fin des 7 étapes</label>
+        ${s.endedEarly?`
+        <div class="fe-resume">
+          <label>La séance suivante commencera à :</label>
+          <select onchange="app.updateSeanceField(${i},'resumeAt', parseInt(this.value)); app.render();">
+            ${STEPS.slice(1).map(([k,l],idx2)=>{ const num=idx2+2; return `<option value="${num}" ${s.resumeAt===num?'selected':''}>${l}</option>`; }).join('')}
+          </select>
+          <button type="button" class="fe-badge" onclick="app.finishSeance(${i})" title="Aller directement à la séance suivante">▸ Séance ${i+2<=f.seances.length?i+2:'suivante'} : démarre à l'étape ${s.resumeAt||'?'}<br>(cliquer pour y aller)</button>
+        </div>` : ''}
+      </div>`;
+    return `
+    <div class="panel">
+      ${endSessionBox}
+      <div class="seance-nav"><div class="dots">${dots}</div><div class="seance-count">Séance ${i+1} / ${f.seances.length}</div></div>
+      <div class="field"><label>Titre de la séance</label><input type="text" id="seance-titre-${i}" value="${this.esc(s.titre)}"></div>
+      <div class="objectif-bar">
+        <label>🎯 Objectif opérationnel de cette séance <span class="hint">Ce que l'élève doit savoir faire à l'issue de CETTE séance précisément — observable et mesurable</span></label>
+        <input type="text" id="seance-objectif-${i}" value="${this.esc(s.objectifOp)}" placeholder="ex. L'élève sait formuler une hypothèse testable à partir d'une observation">
+      </div>
+      ${rappelBox}
+      ${stepsHtml}
+      <div class="field" style="margin-top:20px;">
+        <label>Bilan de la séance / Trace écrite <span class="hint">Ce qui est retenu, la trace écrite produite, une remarque pour la suite</span></label>
+        <textarea oninput="app.updateSeanceField(${i},'bilan',this.value)">${this.esc(s.bilan)}</textarea>
+      </div>
+      <div class="field">
+        <label>🎛️ Différenciation <span class="hint">Adaptations prévues pour certains élèves (étayage, tâche allégée, défi supplémentaire...)</span></label>
+        <textarea oninput="app.updateSeanceField(${i},'differenciation',this.value)">${this.esc(s.differenciation)}</textarea>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="app.backFromSeances()">← ${i===0?'Modifier la fiche séquence':'Séance précédente'}</button>
+        <button class="btn btn-primary" onclick="app.finishSeance(${i})">${i<f.seances.length-1?'Terminer cette séance et passer à la suivante →':'Terminer cette séance et voir le récapitulatif →'}</button>
+      </div>
+    </div>`;
+  },
+
+  renderReview(){
+    const f=this.state.form;
+    return `<div class="panel">
+      <h2 style="margin-top:0;">Récapitulatif complet</h2>
+      ${this.entryDetailHTML(f)}
+
+      <h2>Finaliser et envoyer</h2>
+      <div class="send-steps">
+        <div class="send-step"><div class="num"></div><div class="body">
+          <strong>Télécharger votre fiche (.docx)</strong>
+          <p>Un vrai document Word, à garder pour vous : à adapter, imprimer ou classer comme vous le souhaitez.</p>
+          <button class="btn btn-primary" style="margin-top:8px;" onclick="app.downloadDocx()">📝 Télécharger la fiche Word</button>
+          <button class="btn btn-ghost" style="margin-top:8px;margin-left:8px;" onclick="app.printEntry(app.state.form)">🖨️ Aperçu / imprimer maintenant</button>
+        </div></div>
+        <div class="send-step"><div class="num"></div><div class="body">
+          <strong>Télécharger le pack pour le conseiller (.zip)</strong>
+          <p>Les données de la séquence, dans un format que le conseiller pédagogique pourra réutiliser. C'est ce fichier qu'il faut joindre à l'email — pas le Word.</p>
+          <button class="btn btn-primary" style="margin-top:8px;" onclick="app.downloadZip()">📦 Télécharger le pack (.zip)</button>
+        </div></div>
+        <div class="send-step"><div class="num"></div><div class="body">
+          <strong>Envoyer par email à ${this.esc(CONSEILLER_EMAIL)}</strong>
+          <p>Ouvre Gmail dans votre navigateur, message pré-rempli. Joignez le fichier .zip téléchargé juste avant, puis envoyez.</p>
+          <button class="btn btn-primary" style="margin-top:8px;" onclick="app.openGmailWeb()">✉️ Ouvrir dans le navigateur</button>
+          <p style="margin-top:10px;">Le bouton ne fonctionne pas (rien ne s'ouvre) ? <button class="btn btn-ghost" onclick="app.copyEmailText()">📋 Copier le texte de l'email</button> puis collez-le manuellement dans un nouveau message.</p>
+        </div></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="app.goToSeanceIndex(${f.seances.length-1})">← Revenir aux séances</button>
+        <button class="btn btn-ghost" onclick="app.restart()">Nouvelle séquence</button>
+      </div>
+    </div>`;
+  },
+
+  attachHandlers(){
+    const f=this.state.form;
+    if(f){
+      const bind=(id,field)=>{ const el=document.getElementById(id); if(el) el.oninput=()=>this.updateForm(field, el.value); };
+      bind('f-teacherName','teacherName'); bind('f-school','school'); bind('f-niveauClasse','niveauClasse');
+      bind('f-nbEleves','nbEleves'); bind('f-domaineEnseignement','domaineEnseignement');
+      bind('f-objectif','objectif');
+      bind('f-vocabulaire','vocabulaire'); bind('f-prerequis','prerequis'); bind('f-materiel','materiel'); bind('f-evaluation','evaluation');
+      const i=f.currentSeanceIndex||0;
+      const titreEl=document.getElementById('seance-titre-'+i);
+      if(titreEl) titreEl.oninput=()=>this.updateSeanceField(i,'titre',titreEl.value);
+      const objEl=document.getElementById('seance-objectif-'+i);
+      if(objEl) objEl.oninput=()=>this.updateSeanceField(i,'objectifOp',objEl.value);
+    }
+  }
+};
+
+document.getElementById('import-input').addEventListener('change', function(e){
+  if(e.target.files && e.target.files[0]) app.handleImportFile(e.target.files[0]);
+  e.target.value='';
+});
+
+window.addEventListener('beforeunload', function(e){
+  if(app.state.form && !app.state.hasDownloaded){
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+app.render();
+</script>
+</body>
+</html>
